@@ -1,6 +1,14 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, redirect } from "react-router-dom";
+import { authStore } from "../../store/auth";
+import { useEffect } from "react";
 
 export default function AuthLayout() {
+    const authState = authStore((state) => state.authState);
+    useEffect(() => {
+      if (authState.isLoggedIn) {
+        redirect("/");
+      }
+    }, [authState]);
   return (
     <div className="grid grid-cols-2 gap-2 w-screen h-screen">
       <div className="flex justify-center">
